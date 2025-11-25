@@ -148,12 +148,12 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
       <div className="p-6 bg-slate-900/50 border-b border-slate-800 z-20 shrink-0">
         <div className="max-w-4xl mx-auto space-y-4">
           <div className="flex gap-4">
-             <div className="flex-1 relative">
+             <div className="flex-1 relative group">
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Describe your vision (or ask GlowMint Muse for help)..."
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 pr-20 text-slate-200 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none resize-none h-24 text-sm shadow-inner"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 pr-20 text-slate-200 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none resize-none h-24 text-sm shadow-inner transition-colors duration-200"
                 />
                 <div className="absolute bottom-3 right-3 text-xs text-slate-500">
                     {prompt.length} chars
@@ -164,7 +164,7 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
                 <Button 
                     onClick={handleGenerate} 
                     isLoading={isGenerating} 
-                    className="w-full py-3 h-full text-lg shadow-xl shadow-teal-500/10"
+                    className="w-full py-3 h-full text-lg shadow-xl shadow-teal-500/10 hover:shadow-teal-500/30 transform transition-all hover:scale-[1.02]"
                     icon="✨"
                 >
                     Generate
@@ -172,11 +172,11 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
              </div>
           </div>
 
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-4 text-sm animate-fade-in">
             <select 
               value={config.model}
               onChange={(e) => setConfig({...config, model: e.target.value as GenerationModel})}
-              className="bg-slate-800 border border-slate-700 text-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-teal-500 outline-none"
+              className="bg-slate-800 border border-slate-700 text-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-teal-500 outline-none transition-colors cursor-pointer hover:border-slate-600"
             >
               <option value={GenerationModel.Flash}>⚡ Gemini Flash (Fast)</option>
               <option value={GenerationModel.Pro}>💎 Gemini Pro (Quality)</option>
@@ -185,7 +185,7 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
             <select 
               value={config.aspectRatio}
               onChange={(e) => setConfig({...config, aspectRatio: e.target.value as AspectRatio})}
-              className="bg-slate-800 border border-slate-700 text-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-teal-500 outline-none"
+              className="bg-slate-800 border border-slate-700 text-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-teal-500 outline-none transition-colors cursor-pointer hover:border-slate-600"
             >
               <option value={AspectRatio.Square}>1:1 Square</option>
               <option value={AspectRatio.Landscape}>4:3 Landscape</option>
@@ -231,7 +231,7 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
       {/* Main Content: Viewer or Empty State */}
       <div className="flex-1 overflow-hidden relative flex flex-col">
         {isGenerating ? (
-           <div className="w-full h-full flex flex-col p-2 gap-2">
+           <div className="w-full h-full flex flex-col p-2 gap-2 animate-fade-in">
               {/* Skeleton Canvas */}
               <div className="flex-1 rounded-xl bg-slate-900 relative overflow-hidden flex items-center justify-center ring-1 ring-white/5 shadow-2xl">
                   {/* Pulse and Glow Effects */}
@@ -260,27 +260,27 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
                </div>
            </div>
         ) : !selectedImage ? (
-          <div className="h-full flex flex-col items-center justify-center text-slate-500 space-y-4">
-             <div className="text-6xl opacity-20">🖼️</div>
-             <p>Select or generate an image to begin editing</p>
+          <div className="h-full flex flex-col items-center justify-center text-slate-500 space-y-4 animate-slide-up">
+             <div className="text-6xl opacity-20 animate-bounce" style={{ animationDuration: '3s' }}>🖼️</div>
+             <p className="opacity-80">Select or generate an image to begin editing</p>
           </div>
         ) : (
           <div className="w-full h-full flex flex-col p-2 gap-2"> 
             
             {/* Image Viewer */}
-            <div className="flex-1 min-h-0 relative group rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-slate-900 flex items-center justify-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+            <div className="flex-1 min-h-0 relative group rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-slate-900 flex items-center justify-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] animate-fade-in">
                <img 
                  src={selectedImage.url} 
                  alt={selectedImage.prompt} 
-                 className="max-w-full max-h-full object-contain"
+                 className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-[1.01]"
                />
                
                {/* Overlay Controls */}
-               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-6 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center items-end h-32">
+               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0 flex justify-center items-end h-32">
                   <div className="flex gap-3">
-                    <Button variant="secondary" onClick={handleDownload} icon="⬇️">Download</Button>
-                    <Button variant="secondary" onClick={() => setEditMode(!editMode)} icon="🪄">Magic Edit</Button>
-                    <Button variant="secondary" onClick={handleAnalyze} icon="🧐">Critique</Button>
+                    <Button variant="secondary" onClick={handleDownload} icon="⬇️" className="hover:-translate-y-1">Download</Button>
+                    <Button variant="secondary" onClick={() => setEditMode(!editMode)} icon="🪄" className="hover:-translate-y-1">Magic Edit</Button>
+                    <Button variant="secondary" onClick={handleAnalyze} icon="🧐" className="hover:-translate-y-1">Critique</Button>
                   </div>
                </div>
             </div>
@@ -289,21 +289,23 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
             <div className="shrink-0 flex flex-col gap-3">
                 {/* Analysis Result */}
                 {analysis && (
-                    <div className="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-3 animate-fade-in max-h-32 overflow-y-auto custom-scrollbar">
-                        <h3 className="text-teal-400 text-xs font-semibold mb-1">Gemini Vision Analysis</h3>
-                        <p className="text-slate-300 text-xs">{analysis}</p>
+                    <div className="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-3 animate-slide-up max-h-32 overflow-y-auto custom-scrollbar shadow-lg">
+                        <h3 className="text-teal-400 text-xs font-semibold mb-1 flex items-center gap-1">
+                            <span>👁️</span> Gemini Vision Analysis
+                        </h3>
+                        <p className="text-slate-300 text-xs leading-relaxed">{analysis}</p>
                     </div>
                 )}
 
                 {/* Magic Edit Panel */}
                 {editMode && (
-                    <div className="w-full bg-slate-800/50 border border-teal-500/30 rounded-xl p-3 flex gap-3 items-center animate-fade-in">
-                        <div className="bg-teal-500/20 p-2 rounded-lg text-teal-300 text-xl">🪄</div>
+                    <div className="w-full bg-slate-800/50 border border-teal-500/30 rounded-xl p-3 flex gap-3 items-center animate-slide-up shadow-lg shadow-teal-500/5">
+                        <div className="bg-teal-500/20 p-2 rounded-lg text-teal-300 text-xl animate-pulse">🪄</div>
                         <div className="flex-1">
                             <label className="block text-[10px] text-teal-300 mb-0.5 font-semibold">SEMANTIC EDITING</label>
                             <input 
                                 type="text" 
-                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-slate-200 focus:ring-1 focus:ring-teal-500 outline-none"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-slate-200 focus:ring-1 focus:ring-teal-500 outline-none transition-all"
                                 placeholder="e.g., 'Make the lighting moodier', 'Turn the cat into a dog'"
                                 value={editPrompt}
                                 onChange={(e) => setEditPrompt(e.target.value)}
@@ -320,7 +322,7 @@ export const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
                             <button 
                                 key={img.id}
                                 onClick={() => { setSelectedImage(img); setEditMode(false); setAnalysis(null); setPrompt(img.prompt); }}
-                                className={`relative h-16 aspect-square shrink-0 rounded-lg overflow-hidden border-2 transition-all ${selectedImage.id === img.id ? 'border-teal-500 scale-105 shadow-lg shadow-teal-500/20' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                                className={`relative h-16 aspect-square shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 ${selectedImage.id === img.id ? 'border-teal-500 scale-105 shadow-lg shadow-teal-500/20' : 'border-transparent opacity-60 hover:opacity-100 hover:scale-105'}`}
                             >
                                 <img src={img.url} className="w-full h-full object-cover" loading="lazy" />
                             </button>

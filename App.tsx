@@ -76,13 +76,13 @@ function App() {
   // Blocking overlay if no key selected
   if (!hasApiKey) {
     return (
-      <div className="flex flex-col h-screen w-screen bg-slate-950 items-center justify-center text-center p-8 relative overflow-hidden">
+      <div className="flex flex-col h-screen w-screen bg-slate-950 items-center justify-center text-center p-8 relative overflow-hidden animate-fade-in">
         {/* Ambience */}
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-teal-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-emerald-600/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-teal-600/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-emerald-600/20 rounded-full blur-3xl pointer-events-none animate-pulse" style={{ animationDelay: '1s' }} />
 
-        <div className="relative z-10 max-w-md space-y-6">
-          <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl mx-auto flex items-center justify-center text-4xl shadow-xl shadow-teal-500/20">
+        <div className="relative z-10 max-w-md space-y-6 animate-slide-up">
+          <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl mx-auto flex items-center justify-center text-4xl shadow-xl shadow-teal-500/20 transform hover:rotate-12 transition-transform cursor-default">
             ✨
           </div>
           <h1 className="text-3xl font-bold text-white">Welcome to GlowMint Muse</h1>
@@ -92,11 +92,11 @@ function App() {
           <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4 text-sm text-slate-300">
              <p>Access to <span className="text-teal-400 font-mono">gemini-3-pro-image-preview</span> and <span className="text-teal-400 font-mono">gemini-2.5-flash-image</span> requires a valid API key selection.</p>
           </div>
-          <Button onClick={handleConnectApiKey} className="w-full py-3 text-lg">
+          <Button onClick={handleConnectApiKey} className="w-full py-3 text-lg hover:scale-105">
             Connect & Start Creating
           </Button>
            <p className="text-xs text-slate-500 pt-4">
-            <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 underline">
+            <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 underline transition-colors">
               Learn more about billing requirements
             </a>
           </p>
@@ -106,7 +106,7 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen w-screen bg-slate-950 text-slate-50 overflow-hidden">
+    <div className="flex h-screen w-screen bg-slate-950 text-slate-50 overflow-hidden animate-fade-in">
       {/* Sidebar / Chat Area */}
       <div className="w-96 flex-shrink-0 h-full border-r border-slate-800 relative z-30 shadow-2xl">
         <ChatInterface 
@@ -128,8 +128,8 @@ function App() {
       
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-teal-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }} />
       </div>
     </div>
   );
