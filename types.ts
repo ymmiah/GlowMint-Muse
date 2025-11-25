@@ -9,6 +9,7 @@ export interface ChatMessage {
   text: string;
   timestamp: Date;
   isThinking?: boolean;
+  attachment?: string; // Base64 data URL
 }
 
 export interface GeneratedImage {
@@ -18,6 +19,7 @@ export interface GeneratedImage {
   timestamp: Date;
   aspectRatio: string;
   model: string;
+  source?: 'generated' | 'imported';
 }
 
 export enum AspectRatio {

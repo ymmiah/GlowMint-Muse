@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChatInterface } from './components/ChatInterface';
 import { ImageWorkspace } from './components/ImageWorkspace';
-import { GeneratedImage } from './types';
+import { GeneratedImage, GenerationModel, AspectRatio } from './types';
 import { Button } from './components/Button';
 
 function App() {
@@ -53,6 +53,20 @@ function App() {
     setGeneratedImages(prev => [image, ...prev]);
   };
 
+  const handleImportImage = (base64: string) => {
+    const importedImage: GeneratedImage = {
+        id: Date.now().toString(),
+        url: base64,
+        prompt: "Imported from Chat",
+        timestamp: new Date(),
+        aspectRatio: AspectRatio.Square, // Default
+        model: GenerationModel.Flash, // Default assumption
+        source: 'imported'
+    };
+    setGeneratedImages(prev => [importedImage, ...prev]);
+    // The ImageWorkspace useEffect will automatically select this new image
+  };
+
   if (checkingKey) {
     return <div className="flex h-screen w-screen bg-slate-950 items-center justify-center text-teal-500">
       <span className="w-8 h-8 border-4 border-current border-t-transparent rounded-full animate-spin" />
@@ -95,7 +109,11 @@ function App() {
     <div className="flex h-screen w-screen bg-slate-950 text-slate-50 overflow-hidden">
       {/* Sidebar / Chat Area */}
       <div className="w-96 flex-shrink-0 h-full border-r border-slate-800 relative z-30 shadow-2xl">
-        <ChatInterface onGeneratePrompt={handlePromptFromChat} />
+        <ChatInterface 
+            onGeneratePrompt={handlePromptFromChat} 
+            onImportImage={handleImportImage}
+            generatedCount={generatedImages.length}
+        />
       </div>
 
       {/* Main Workspace */}
