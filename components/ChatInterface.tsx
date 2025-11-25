@@ -35,6 +35,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  // Mock credits for profile display
+  const [credits, setCredits] = useState(85);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -197,32 +199,76 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         
         {/* Profile Popover */}
         {showProfile && (
-            <div className="absolute top-16 right-4 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-4 z-50 animate-fade-in">
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-400 text-lg">
-                        👤
-                    </div>
+            <div className="absolute top-16 right-4 w-80 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl z-50 overflow-hidden animate-fade-in ring-1 ring-white/10">
+                {/* Profile Header with Gradient */}
+                <div className="bg-gradient-to-r from-teal-900/80 to-emerald-900/80 p-6 pt-8 text-center relative">
+                     <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                     <div className="relative inline-block group cursor-pointer">
+                        <div className="w-20 h-20 mx-auto rounded-full bg-slate-800 border-4 border-slate-900 shadow-xl flex items-center justify-center text-3xl relative overflow-hidden">
+                            <span className="group-hover:opacity-0 transition-opacity">🧙‍♂️</span>
+                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs text-white font-medium">
+                                Edit
+                            </div>
+                        </div>
+                        <div className="absolute bottom-0 right-0 w-5 h-5 bg-teal-500 border-2 border-slate-900 rounded-full" title="Online"></div>
+                     </div>
+                     <h3 className="mt-3 text-white font-bold text-lg tracking-wide">Creative Wizard</h3>
+                     <span className="inline-block px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 text-[10px] font-bold uppercase tracking-wider border border-teal-500/30 mt-1">
+                        GlowMint Pro
+                     </span>
+                </div>
+
+                {/* Stats Section */}
+                <div className="p-5 space-y-5">
+                    {/* Credit Usage */}
                     <div>
-                        <h3 className="text-sm font-semibold text-white">Creative User</h3>
-                        <p className="text-xs text-slate-400">Pro Plan</p>
+                        <div className="flex justify-between text-xs mb-1.5">
+                            <span className="text-slate-400 font-medium">Monthly Credits</span>
+                            <span className="text-teal-400 font-bold">{credits}/100</span>
+                        </div>
+                        <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div className="bg-gradient-to-r from-teal-500 to-emerald-500 h-full rounded-full" style={{ width: `${credits}%` }}></div>
+                        </div>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50 text-center hover:bg-slate-800 transition-colors">
+                            <div className="text-2xl font-bold text-white mb-0.5">{generatedCount}</div>
+                            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Creations</div>
+                        </div>
+                        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50 text-center hover:bg-slate-800 transition-colors">
+                            <div className="text-2xl font-bold text-white mb-0.5">{messages.length}</div>
+                            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Messages</div>
+                        </div>
+                    </div>
+
+                    {/* Menu Items */}
+                    <div className="space-y-1 pt-2">
+                        <button className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-sm text-slate-300 transition-colors group">
+                            <span className="flex items-center gap-3">
+                                <span className="text-slate-500 group-hover:text-teal-400 transition-colors">⚙️</span> Settings
+                            </span>
+                            <span className="text-slate-600 text-xs">›</span>
+                        </button>
+                        <button className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 text-sm text-slate-300 transition-colors group">
+                            <span className="flex items-center gap-3">
+                                <span className="text-slate-500 group-hover:text-teal-400 transition-colors">💳</span> Subscription
+                            </span>
+                            <span className="text-slate-600 text-xs">›</span>
+                        </button>
                     </div>
                 </div>
-                <div className="space-y-2">
-                    <div className="flex justify-between text-sm py-2 border-b border-slate-700/50">
-                        <span className="text-slate-400">Generated Images</span>
-                        <span className="text-teal-400 font-bold">{generatedCount}</span>
-                    </div>
-                    <div className="flex justify-between text-sm py-2 border-b border-slate-700/50">
-                        <span className="text-slate-400">Messages</span>
-                        <span className="text-teal-400 font-bold">{messages.length}</span>
-                    </div>
+
+                {/* Footer */}
+                <div className="p-4 bg-slate-900/50 border-t border-slate-800">
+                     <button 
+                        onClick={() => setShowProfile(false)}
+                        className="w-full py-2 bg-slate-800 hover:bg-red-500/10 hover:text-red-400 border border-slate-700 hover:border-red-500/30 text-xs font-medium text-slate-400 rounded-lg transition-all"
+                    >
+                        Sign Out
+                    </button>
                 </div>
-                <button 
-                    onClick={() => setShowProfile(false)}
-                    className="mt-3 w-full py-1.5 bg-slate-700 hover:bg-slate-600 text-xs text-slate-300 rounded transition-colors"
-                >
-                    Close
-                </button>
             </div>
         )}
       </div>
