@@ -1,6 +1,18 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { AspectRatio, GenerationModel } from "../types";
 
+/**
+ * ⚠️ SECURITY WARNING ⚠️
+ * 
+ * This service initializes the Google GenAI SDK client-side.
+ * In a production environment, your API Key should NEVER be exposed to the browser.
+ * 
+ * For production:
+ * 1. Move these API calls to a secure backend server.
+ * 2. Proxy requests from the frontend to your backend.
+ * 3. Implement rate limiting and authentication.
+ */
+
 // Helper to get a fresh client instance.
 // Critical for handling API key changes dynamically (e.g. user selects a paid project).
 const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY });

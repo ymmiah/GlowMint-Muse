@@ -4,6 +4,16 @@
 
 Built exclusively with the **Google GenAI SDK**, it showcases the seamless integration of multimodal AI models.
 
+## ⚠️ Security & Architecture Warning
+
+**IMPORTANT: Client-Side Prototype**
+
+This application acts as a frontend-only prototype. It initializes the Google GenAI SDK directly in the browser using the API Key (`process.env.API_KEY`).
+
+-   **Do NOT deploy this code to a public production URL** without modification.
+-   Exposing your API key client-side allows malicious actors to extract it and consume your API quota.
+-   **Production Recommendation**: For a production deployment, you must move the logic in `services/geminiService.ts` to a secure backend server (Node.js, Python, Go) and proxy requests from the frontend.
+
 ## 🚀 Key Features
 
 ### 🧠 Gemini Muse (Creative Chat)
