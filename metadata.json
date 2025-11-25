@@ -1,0 +1,7 @@
+{
+  "name": "GlowMint Muse",
+  "description": "An AI-Native Creative Platform where user vision meets Google's Gemini and Imagen ecosystem for ideation, generation, and refinement.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
